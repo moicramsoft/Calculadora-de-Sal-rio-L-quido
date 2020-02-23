@@ -3,18 +3,19 @@ package br.com.codenation.calculadora;
 
 public class CalculadoraSalario {
 
+          private  int IRRF;
+          private  int INSS ;
+         private   int ateMil;
+         private final   double ateMilEQuinhentos=8;// descont de 8%
+         private final   int ateMilEQuinhentosUm=11;// descont de 11%
+         private final   int ateDezMil=11;// descont de 11%
+         private final   int isentoAteTresMil=0;
+         private final   int TresMilAteSeisMil=(int) 7.5;//7.5%
+         private   int AcimaDeSeisMil=15;//15%
+         private double desconto;
+            //salarioBase=3.000;
 	public long calcularSalarioLiquido(double salarioBase) {
             
-            int IRRF;
-            int INSS ;
-            int ateMil;
-            int ateMilEQuinhentos;// descont de 8%
-            int ateMilEQuinhentosUm;// descont de 11%
-            int ateDezMil;// descont de 11%
-            int isentoAteTresMil;
-            int TresMilAteSeisMil;//7.5%
-            int AcimaDeSeisMil;//15%
-            salarioBase=3.000;
 		//Use o Math.round apenas no final do método para arredondar o valor final.
 		//Documentação do método: https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html#round-double-
 		return Math.round(0.0);
@@ -23,16 +24,20 @@ public class CalculadoraSalario {
 	
         //Exemplo de mét/*o*/do que pode ser criado para separar melhor as responsábilidades de seu algorítmo
 	private double calcularInss(double salarioBase) {
-            int descInss=8;
-            int descIr=11;
-            //double salarioBruto=3.000;
-             System.out.println(salarioBase);
+       if (salarioBase <= 1500) {
+            this.desconto = this.ateMilEQuinhentos;
+       } else {
+			this.desconto = 11d;
+		}
             
-		return salarioBase - (salarioBase * (descInss + descIr) / 100); 
+		//return salarioBase - (salarioBase * (descInss + descIr) / 100); 
+            return 0;
 	}
    public static void main(String[] args) {
-            CalculadoraSalario CalculadoraSalario = new CalculadoraSalario();
-            CalculadoraSalario.calcularInss(1.000);
+           // CalculadoraSalario CalculadoraSalario = new CalculadoraSalario();
+           // CalculadoraSalario.calcularInss(1.000);
+           
+          
     }
 }
 /*Dúvidas ou Problemas?
