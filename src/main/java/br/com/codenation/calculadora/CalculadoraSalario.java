@@ -2,86 +2,69 @@ package br.com.codenation.calculadora;
 
 
 public class CalculadoraSalario {
-	
-
-	public long calcularSalarioLiquido(double salarioBase) {
+	double vlSalMinimo = 1039.00;
+	double salBase;
+	double salLiquido;
+	double bsCalIRRF;
+	double ttlINSS;
+	double ttIRRF;
+	public long calcularSalarioLiquido(double salBase) {
 		//Use o Math.round apenas no final do método para arredondar o valor final.
 		//Documentação do método: https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html#round-double-
-                    var Variaveis= new var();
-                    
-		Variaveis.salarioBase = Variaveis.salarioBase;
-		if (Variaveis.salarioBase < Variaveis.vlSalarioMinimo) {
+                                
+		this.salBase = salBase;
+		if (this.salBase < this.vlSalMinimo) {
 			return 0;
 		}
-		Variaveis.calcularInss(Variaveis.salarioBase);
-		Variaveis.calcularIRRF(Variaveis.salarioBase);
-		Variaveis.salarioliquido = Variaveis.salarioBase - Variaveis.totalIRRF - Variaveis.totalINSS;
-		return Math.round(Variaveis.salarioliquido);
+		calcularInss(this.salBase);
+		calcularIRRF(this.salBase);
+		this.salLiquido = this.salBase - this.ttIRRF - this.ttlINSS;
+		return Math.round(this.salLiquido);
 	}
 
 
 	//Exemplo de método que pode ser criado para separar melhor as responsábilidades de seu algorítmo
-	public long calcularInss(double salarioBase) {
-		/**
-		 *
-		 Faixa salarial	Percentual de desconto
-		 Até R$ 1.500,00	8%
-		 De R$ 1.500,01 até R$ 4.000,00	9%
-		 Acima de R$ 4.000,00	11%
-		 */
-		double aliquota;
-                var Variaveis= new var();
-		if (Variaveis.salarioBase <= 1500) {
-			aliquota = 8d;
-		} else if (Variaveis.salarioBase >= 1500.01 && Variaveis.salarioBase <= 4000) {
-			aliquota = 9d;
+	public long calcularInss(double salBase) {
+                double alqt;
+               	if (this.salBase <= 1500) {
+			alqt = 8d;
+		} else if (this.salBase >= 1500.01 && this.salBase <= 4000) {
+			alqt = 9d;
 		} else {
-			aliquota = 11d;
+			alqt = 11d;
 		}
-		Variaveis.totalINSS = Variaveis.salarioBase * aliquota / 100;
-		Variaveis.baseCalculoIRRF = Variaveis.salarioBase - Variaveis.totalINSS;
-		return Math.round(Variaveis.totalINSS);
+		this.ttlINSS = this.salBase * alqt / 100;
+		this.bsCalIRRF = this.salBase - this.ttlINSS;
+		return Math.round(this.ttlINSS);
 	}
 
 	/**
-	* @param salarioBase
+	* @param salBase
      * @return 
 	 */
-	public long calcularIRRF(double salarioBase) {
-		calcularInss(salarioBase);
-           	double aliquota = 0d;
-                var Variaveis= new var();
-		if (Variaveis.baseCalculoIRRF <= 3000) {
-			Variaveis.totalIRRF = 0d;
-		} else if (Variaveis.baseCalculoIRRF >= 3000.01 && Variaveis.baseCalculoIRRF <= 6000) {
-			aliquota = 7.5;
+	public long calcularIRRF(double salBase) {
+		calcularInss(salBase);
+           	double alqt = 0d;
+              if (this.bsCalIRRF <= 3000) {
+			this.ttIRRF = 0d;
+		} else if (this.bsCalIRRF >= 3000.01 && this.bsCalIRRF <= 6000) {
+			alqt = 7.5;
 		} else {
-			aliquota = 15d;
+			alqt = 15d;
 		}
-		if (aliquota > 0)
-			Variaveis.totalIRRF = Variaveis.baseCalculoIRRF * aliquota / 100;
+		if (alqt > 0)
+			this.ttIRRF = this.bsCalIRRF * alqt / 100;
 
-		return Math.round(Variaveis.totalIRRF);
-		//aplicarDeducoes();
+		return Math.round(this.ttIRRF);
+		//descontos();
 	}
 
-	/**
-	 * Até 1.903,98	0%	0,00
-	 * De 1.903,99 até 2.826,65	7,5%	142,80
-	 * De 2.826,66 até 3.751,05	15%	354,80
-	 * De 3.751,06 até 4.664,68	22,5%	636,13
-	 * Acima de 4.664,69	27,5%	869,36
-	 */
-	private void aplicarDeducoes() {
-             var Variaveis= new var();
-		if (Variaveis.salarioBase >= 3000.0 && Variaveis.salarioBase <= 6000) {
-			Variaveis.totalIRRF -= 142.80;
-		} else if (Variaveis.salarioBase >= 6000.00)
-			Variaveis.totalIRRF -= 354.80;
+	private void descontos() {
+           		if (this.salBase >= 3000.0 && this.salBase <= 6000) {
+			this.ttIRRF -= 142.80;
+		} else if (this.salBase < 6000.00) {
+             } else {
+                    this.ttIRRF -= 354.80;
+             }
 	}
 }
-
-
-/*Dúvidas ou Problemas?
-Manda e-mail para o meajuda@codenation.dev que iremos te ajudar! 
-*/
